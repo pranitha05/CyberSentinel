@@ -53,7 +53,7 @@ CyberSentinel is a personal security dashboard that helps users assess and impro
 
 2. (Optional) Create a Virtual Environment
 
-   ```
+   ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
