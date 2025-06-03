@@ -6,7 +6,19 @@
 
 *CyberSentinel* is a personal security dashboard that helps users assess and improve their digital hygiene. It currently includes tools for password strength analysis and breach detection using the HaveIBeenPwned API, with future expansion planned for network scanning and privacy risk assessment.
 
-CyberSentinel Dashboard Screenshot
+---
+
+## 🖥️ Screenshots
+
+### 🧩 Dashboard View
+![Dashboard Screenshot](images/dasboard.png)
+
+### 🔐 Password Strength Checker
+![Password Strength](images/passwordchecker.png)
+
+### 🕵️ Breach Detection
+![Breach Detection](images/breachdetection.png)
+
 
 
 
@@ -85,7 +97,7 @@ Feel free to open an issue or submit a pull request to suggest improvements or r
 ## 🖥️ Screenshots
 
 ### 🧩 Dashboard View
-![Dashboard Screenshot](images/dasboard.png)
+![Dashboard Screenshot](images/dashboard.png)
 
 ### 🔐 Password Strength Checker
 ![Password Strength](images/passwordchecker.png)
