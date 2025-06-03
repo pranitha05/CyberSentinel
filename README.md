@@ -4,9 +4,9 @@
 ````markdown
 # 🔐 CyberSentinel
 
-**CyberSentinel** is a personal security dashboard that helps users assess and improve their digital hygiene. It currently includes tools for password strength analysis and breach detection using the HaveIBeenPwned API, with future expansion planned for network scanning and privacy risk assessment.
+*CyberSentinel* is a personal security dashboard that helps users assess and improve their digital hygiene. It currently includes tools for password strength analysis and breach detection using the HaveIBeenPwned API, with future expansion planned for network scanning and privacy risk assessment.
 
-![CyberSentinel Dashboard Screenshot]
+CyberSentinel Dashboard Screenshot
 
 
 
@@ -75,11 +75,6 @@ Then open your browser and go to:
 
 ---
 
-## 🌍 Live Demo
-
-*Coming Soon!*
-
----
 
 ## 🤝 Contributing
 
@@ -107,6 +102,5 @@ You are welcome to explore, modify, and expand on it as you wish!
 
 ---
 
-```
 
 
