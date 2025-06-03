@@ -49,7 +49,7 @@ CyberSentinel is a personal security dashboard that helps users assess and impro
    ```bash
    git clone https://github.com/pranitha05/CyberSentinel.git
    cd CyberSentinel
-````
+```
 
 2. **(Optional) Create a Virtual Environment**
 
