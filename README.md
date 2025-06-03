@@ -1,4 +1,3 @@
-Sure! Here's the **entire `README.md` content in proper Markdown**, ready for you to paste directly into your `README.md` file:
 
 ---
 
@@ -8,9 +7,6 @@ Sure! Here's the **entire `README.md` content in proper Markdown**, ready for yo
 **CyberSentinel** is a personal security dashboard that helps users assess and improve their digital hygiene. It currently includes tools for password strength analysis and breach detection using the HaveIBeenPwned API, with future expansion planned for network scanning and privacy risk assessment.
 
 ![CyberSentinel Dashboard Screenshot]
-![Screenshot 2025-06-03 at 11 06 43 AM](https://github.com/user-attachments/assets/308b929b-6cb2-4ec9-bdb0-ada805e0d165)
-![Screenshot 2025-06-03 at 11 07 51 AM](https://github.com/user-attachments/assets/8582b70e-993f-47df-8829-060adaea71e8)
-![Screenshot 2025-06-03 at 11 08 16 AM](https://github.com/user-attachments/assets/f138fc46-5c42-40a9-bbef-1635fe04c33e)
 
 
 
