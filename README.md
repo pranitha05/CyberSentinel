@@ -85,7 +85,7 @@ Feel free to open an issue or submit a pull request to suggest improvements or r
 ## 🖥️ Screenshots
 
 ### 🧩 Dashboard View
-![Dashboard Screenshot](images/dashboard.png)
+![Dashboard Screenshot](images/dasboard.png)
 
 ### 🔐 Password Strength Checker
 ![Password Strength](images/passwordchecker.png)
