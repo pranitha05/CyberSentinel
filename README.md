@@ -8,22 +8,6 @@
 
 ---
 
-## 🖥️ Screenshots
-
-### 🧩 Dashboard View
-![Dashboard Screenshot](images/dasboard.png)
-
-### 🔐 Password Strength Checker
-![Password Strength](images/passwordchecker.png)
-
-### 🕵️ Breach Detection
-![Breach Detection](images/breachdetection.png)
-
-
-
-
----
-
 ## 🚀 Features
 
 - ✅ Password Strength Checker with smart scoring algorithms  
@@ -94,9 +78,18 @@ Contributions are welcome!
 Feel free to open an issue or submit a pull request to suggest improvements or report bugs.
 
 ---
+## 🖥️ Screenshots
 
+### 🧩 Dashboard View
+![Dashboard Screenshot](images/dasboard.png)
 
+### 🔐 Password Strength Checker
+![Password Strength](images/passwordchecker.png)
 
+### 🕵️ Breach Detection
+![Breach Detection](images/breachdetection.png)
+
+---
 
 ## 📌 Project Status
 
