@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Breach Detection - CyberSentinel{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1>Breach Detection (HaveIBeenPwned)</h1>
+    <form method="POST">
+      <input type="password" name="password" placeholder="Enter password" required />
+      <button type="submit">Check Breach</button>
+    </form>
+
+    {% if password %}
+      <div class="results">
+        <h2>Result</h2>
+        <p><strong>Password:</strong> {{ password }}</p>
+        <p><strong>Breach Status:</strong> {{ result }}</p>
+      </div>
+    {% endif %}
+
+    <p><a href="{{ url_for('main.index') }}">← Back to Home</a></p>
+  </div>
+{% endblock %}
