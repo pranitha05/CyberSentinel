@@ -82,6 +82,18 @@ Contributions are welcome!
 Feel free to open an issue or submit a pull request to suggest improvements or report bugs.
 
 ---
+## 🖥️ Screenshots
+
+### 🧩 Dashboard View
+![Dashboard Screenshot](images/dashboard.png)
+
+### 🔐 Password Strength Checker
+![Password Strength](images/passwordchecker.png)
+
+### 🕵️ Breach Detection
+![Breach Detection](images/breachdetection.png)
+
+---
 
 ## 📌 Project Status
 
