@@ -31,16 +31,17 @@ CyberSentinel is a personal security dashboard that helps users assess and impro
 ### 🕵️ URL Privacy Checker
 ![URL Detection](images/urlchecker.png)
 
-**###🌐 Network Scanner**
+###🌐 Network Scanner
 ![Network Scanner](images/network-scanner.png)
 
-**###🧬 Encryption Tools**
+###🧬 Encryption Tools
 ![Encryption Tools](images/encryption.png)
 
-**###🧠 Privacy Risk Analyzer**
+###🧠 Privacy Risk Analyzer
 ![Privacy Risk Analyzer](images/pra.png)
 
-**###💬 AI Chatbot Assistant**
+###💬 AI Chatbot Assistant
+
 ![AI Chatbot](images/chatbot.png)
 
 
