@@ -1,0 +1,16 @@
+# 🔒 Ignore API keys and secrets
+.env
+firebase-admin-sdk.json
+static/firebase-auth.js
+
+# 🐍 Python/Flask-specific ignores
+__pycache__/
+instance/
+*.pyc
+
+# 🌐 Environment + system
+.env.*
+.vscode/
+*.log
+.DS_Store
+node_modules/
