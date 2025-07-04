@@ -4,8 +4,9 @@
 
 # 🔐 CyberSentinel
 
-CyberSentinel is a personal security dashboard that helps users assess and improve their digital hygiene. It currently includes tools for password strength analysis and breach detection using the HaveIBeenPwned API, with future expansion planned for network scanning and privacy risk assessment.
+CyberSentinel is a personal cybersecurity dashboard that helps users assess and improve their digital hygiene through an interactive web interface. It offers essential tools like a Password Strength Analyzer, URL Privacy Checker, Network Vulnerability Scanner, Encryption Utilities, and a Privacy Risk Analyzer, all wrapped in a clean, user-friendly design.
 
+Backed by Firebase Authentication and powered by Google Gemini AI, CyberSentinel ensures both security and smart assistance, making digital safety accessible for everyone.
 ---
 
 ## 🚀 Features
