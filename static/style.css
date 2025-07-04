@@ -628,6 +628,78 @@ body.dark .tab-btn.active {
   background-color: #9a90db;
   color: white;
 }
+.hamburger-menu {
+  position: absolute;
+  top: 70px;
+  right:30px;
+  z-index: 999;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: #4b4b8a;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+body.dark .hamburger-menu {
+  background-color: #6a66aa;
+}
+
+.hamburger-menu:hover {
+  background-color: #353569;
+}
+
+body.dark .hamburger-menu:hover {
+  background-color: #5751a1;
+}
+
+.sidebar-menu {
+  position: absolute;
+  top: 30px;            
+  right: 30px;           
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  padding: 15px 0;
+  display: none;
+  flex-direction: column;
+  min-width: 220px;
+  max-width: 90vw;      
+  animation: fadeIn 0.3s ease-in-out;
+  z-index: 998;
+}
+
+
+body.dark .sidebar-menu {
+  background: #1e1e2a;
+  color: #f3f3f3;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.hamburger-menu:hover .sidebar-menu {
+  display: flex;
+}
+
+.sidebar-menu a {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+body.dark .sidebar-menu a {
+  color: #f1f1f1;
+}
+
+.sidebar-menu a:hover {
+  background-color: #f2f2f2;
+}
+
+body.dark .sidebar-menu a:hover {
+  background-color: #2e2e3e;
+}
 
 
 @keyframes fadeIn {

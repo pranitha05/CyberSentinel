@@ -13,7 +13,22 @@
     <a href="{{ url_for('main.index') }}" class="brand">
       <img src="{{ url_for('static', filename='cyberlogo.png') }}" alt="CyberSentinel Logo">
     </a>
+    {% if session.get('user_logged_in') %}
+  <div class="hamburger-menu">
+    ☰
+    <div class="sidebar-menu">
+      <a href="{{ url_for('main.index') }}">🏠 Home</a>
+      <a href="{{ url_for('main.password_checker') }}">🔐 Password Checker</a>
+      <a href="{{ url_for('main.url_checker') }}">🕵️ URL Checker</a>
+      <a href="{{ url_for('main.network_scanner') }}">🌐 Network Scanner</a>
+      <a href="{{ url_for('encryption.encryption_tools') }}">🛡️ Encryption Tools</a>
+      <a href="{{ url_for('main.privacy_analyzer') }}">🧠 Privacy Analyzer</a>
+      <a href="#" onclick="logoutUser()">🚪 Logout</a>
+    </div>
+  </div>
+{% endif %}
       <button id="theme-toggle" title="Toggle Theme">🌙</button>
+
   </header>
 
   <main>
