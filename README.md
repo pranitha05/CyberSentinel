@@ -4,32 +4,47 @@
 
 # 🔐 CyberSentinel
 
-CyberSentinel is a personal security dashboard that helps users assess and improve their digital hygiene. It currently includes tools for password strength analysis and breach detection using the HaveIBeenPwned API, with future expansion planned for network scanning and privacy risk assessment.
+CyberSentinel is a personal cybersecurity dashboard that helps users assess and improve their digital hygiene through an interactive web interface. It offers essential tools like a Password Strength Analyzer, URL Privacy Checker, Network Vulnerability Scanner, Encryption Utilities, and a Privacy Risk Analyzer, all wrapped in a clean, user-friendly design.
 
+Backed by Firebase Authentication and powered by Google Gemini AI, CyberSentinel ensures both security and smart assistance, making digital safety accessible for everyone.
 ---
 
 ## 🚀 Features
 
 - ✅ Password Strength Checker with smart scoring algorithms  
-- ✅ Breach Detection using the [HaveIBeenPwned API](https://haveibeenpwned.com/API)  
-- 🛠️ Simple and intuitive Flask-based web interface  
-- 🧭 Future Modules (Coming Soon):
-  - Network vulnerability scanner (Nmap integration)
-  - Encryption utilities for file security
-  - Privacy risk assessment tools
+- ✅ URL Safety Checker to detect phishing and malicious links  
+- ✅ Network Scanner for scanning common open ports and identifying vulnerabilities  
+- ✅ File Encryption Tools (Caesar, Base64, AES) with password-protected encryption/decryption  
+- ✅ Privacy Risk Analyzer to detect exposure of sensitive data like emails, phone numbers, and Aadhaar  
+- 💬 Integrated Gemini-Powered Chatbot for security assistance and awareness tips  
+
 
 ---
 
 ## 🖥️ Screenshots
 
 ### 🧩 Dashboard View
-![Dashboard Screenshot](images/dasboard.png)
+![Dashboard Screenshot](images/csdashboard.gif)
 
 ### 🔐 Password Strength Checker
-![Password Strength](images/passwordchecker.png)
+![Password Strength](images/pwdchecker.png)
 
-### 🕵️ Breach Detection
-![Breach Detection](images/breachdetection.png)
+### 🕵️ URL Privacy Checker
+![URL Detection](images/urlchecker.png)
+
+### 🌐 Network Scanner
+![Network Scanner](images/network-scanner.png)
+
+### 🧬 Encryption Tools
+![Encryption Tools](images/encryption.png)
+
+### 🧠 Privacy Risk Analyzer
+![Privacy Risk Analyzer](images/pra.png)
+
+### 💬 AI Chatbot Assistant
+
+![AI Chatbot](images/chatbot.png)
+
 
 ---
 
@@ -49,19 +64,38 @@ CyberSentinel is a personal security dashboard that helps users assess and impro
    ```bash
    git clone https://github.com/pranitha05/CyberSentinel.git
    cd CyberSentinel
-```
+   ```
 
-2. (Optional) Create a Virtual Environment
+2. **(Optional) Create a Virtual Environment**
 
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
    ```
 
-3. **Install Dependencies**
+3. **Install Python Dependencies**
 
    ```bash
    pip install -r requirements.txt
+   ```
+
+4. **Setup Firebase Admin SDK**
+
+   * Place your `firebase-admin-sdk.json` file in the root directory.
+
+5. **Create a `.env` File**
+
+   Inside the root folder, create a `.env` file with the following content:
+
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key_here
+   FIREBASE_API_KEY=your_firebase_api_key
+   FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+   FIREBASE_PROJECT_ID=your_project_id
+   FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+   FIREBASE_MSG_SENDER_ID=your_msg_sender_id
+   FIREBASE_APP_ID=your_app_id
+   FIREBASE_MEASUREMENT_ID=your_measurement_id
    ```
 
 ---
@@ -77,31 +111,21 @@ Then open your browser and go to:
 
 ---
 
-## 🛡️ API Used
+## 🛡️ APIs & Services Used
 
-* **HaveIBeenPwned API**
-  Checks if a password has been exposed in known data breaches without sending the full password.
+* **Firebase Authentication** – For secure login using Email/Password & Google
+* **Gemini API (by Google)** – Powers the AI-based chatbot assistant
+* **Socket Module** – For port scanning functionality
+* **Custom Regex-based Analysis** – For privacy scoring and sensitive data detection
 
 ---
+
 
 
 ## 🤝 Contributing
 
 Contributions are welcome!
 Feel free to open an issue or submit a pull request to suggest improvements or report bugs.
-
----
-
-
-## 📌 Project Status
-
-* ✅ Password Strength Analysis
-* ✅ Breach Detection Module
-* 🔄 Work in Progress:
-
-  * Network Scanner (Nmap)
-  * File Encryption Utility
-  * Privacy Risk Analyzer
 
 ---
 
