@@ -1,38 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Coming Soon - CyberSentinel</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <style>
-      .coming-soon-container {
-        text-align: center;
-        padding: 80px 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
-      .coming-soon-container h1 {
-        font-size: 3rem;
-        color: #b78ca7;
-      }
-      .coming-soon-container p {
-        font-size: 1.25rem;
-        color: #555;
-      }
-      a {
-        color: #7c7aad;
-        text-decoration: none;
-        font-weight: 600;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-    </style>
-</head>
-<body>
-    <div class="coming-soon-container">
-        <h1>🚧 Coming Soon!</h1>
-        <p>This feature is under development. Stay tuned.</p>
-        <p><a href="{{ url_for('main.index') }}">← Back to Home</a></p>
+{% extends "base.html" %}
+
+{% block title %}Encryption Tools - CyberSentinel{% endblock %}
+
+{% block content %}
+<section class="tagline-section">
+  <h1>🔐 Encryption Tools</h1>
+  <p class="tagline">Secure your data with modern and classic encryption methods.</p>
+</section>
+
+<section class="encryption-container">
+  <form id="encryption-form" method="POST">
+    <label for="inputText">Enter Text:</label>
+    <textarea id="inputText" name="inputText" rows="4" required></textarea>
+
+    <label for="cipher">Select Cipher:</label>
+    <select id="cipher" name="cipher" required>
+      <option value="caesar">Caesar Cipher</option>
+      <option value="base64">Base64</option>
+      <option value="aes">AES (Password Required)</option>
+    </select>
+
+    <div id="key-input" style="display: none;">
+      <label for="key">Enter Key/Password:</label>
+      <input type="text" id="key" name="key">
     </div>
-</body>
-</html>
+
+    <div class="button-group">
+      <button type="submit" formaction="/encrypt">Encrypt</button>
+      <button type="submit" formaction="/decrypt">Decrypt</button>
+      <button type="button" onclick="clearForm()">Clear</button>
+    </div>
+  </form>
+
+  <div class="results" id="result-section" {% if result %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+    <h2>Result:</h2>
+    <pre id="result-output">{{ result or '' }}</pre>
+    <div class="button-group">
+      <button onclick="copyResult()">📋 Copy</button>
+      <span id="copy-feedback" style="margin-left: 10px; color: #4CAF50; display: none;">Copied to clipboard ✅</span>
+      <button onclick="downloadResult()">⬇️ Download</button>
+    </div>
+  </div>
+</section>
+
+<script>
+
+  document.getElementById('cipher').addEventListener('change', function () {
+    const keyInput = document.getElementById('key-input');
+    keyInput.style.display = this.value === 'aes' ? 'block' : 'none';
+  });
+
+  function copyResult() {
+    const text = document.getElementById('result-output').textContent;
+    const feedback = document.getElementById('copy-feedback');
+    if (text.trim()) {
+      navigator.clipboard.writeText(text).then(() => {
+        feedback.style.display = "inline";
+        setTimeout(() => {
+          feedback.style.display = "none";
+        }, 1500);
+      });
+    }
+  }
+
+  function downloadResult() {
+    const text = document.getElementById('result-output').textContent;
+    const blob = new Blob([text], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.download = "encryption_result.txt";
+    link.href = URL.createObjectURL(blob);
+    link.click();
+  }
+
+  function clearForm() {
+    document.getElementById('inputText').value = '';
+    document.getElementById('key').value = '';
+    document.getElementById('cipher').selectedIndex = 0;
+    document.getElementById('key-input').style.display = 'none';
+    document.getElementById('result-output').textContent = '';
+    document.getElementById('result-section').style.display = 'none';
+    document.getElementById('copy-feedback').style.display = 'none';
+  }
+</script>
+{% endblock %}

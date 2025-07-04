@@ -1,38 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Coming Soon - CyberSentinel</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <style>
-      .coming-soon-container {
-        text-align: center;
-        padding: 80px 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
-      .coming-soon-container h1 {
-        font-size: 3rem;
-        color: #b78ca7;
-      }
-      .coming-soon-container p {
-        font-size: 1.25rem;
-        color: #555;
-      }
-      a {
-        color: #7c7aad;
-        text-decoration: none;
-        font-weight: 600;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-    </style>
-</head>
-<body>
-    <div class="coming-soon-container">
-        <h1>🚧 Coming Soon!</h1>
-        <p>This feature is under development. Stay tuned.</p>
-        <p><a href="{{ url_for('main.index') }}">← Back to Home</a></p>
+{% extends "base.html" %}
+
+{% block title %}Privacy Risk Analyzer - CyberSentinel{% endblock %}
+
+{% block content %}
+<section class="tagline-section">
+  <h1>🔍 Privacy Risk Analyzer</h1>
+  <p class="tagline">Evaluate your text for exposed personal and sensitive information.</p>
+</section>
+
+<section class="encryption-container">
+  <form method="POST" action="/privacy-analyzer" id="privacy-form">
+    <label for="inputText">Paste your text (bio, message, resume, etc):</label>
+    <textarea id="inputText" name="inputText" rows="6" required>{{ text or '' }}</textarea>
+
+    <div style="margin-top: 10px;">
+      <button type="submit">Analyze</button>
+      <button type="button" onclick="clearForm()">Clear</button>
     </div>
-</body>
-</html>
+  </form>
+
+  {% if result %}
+  <div class="results" id="result-section">
+    <h2>🔐 Detected Information:</h2>
+    <pre>{{ result.details }}</pre>
+
+    <h3>🛡️ Privacy Risk Score: <span style="color: {{ result.color }}">{{ result.score }}/100</span></h3>
+
+    <h4>💡 Suggestions:</h4>
+    <ul>
+      {% for suggestion in result.suggestions %}
+        <li>{{ suggestion }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</section>
+
+<script>
+  function clearForm() {
+    document.getElementById('inputText').value = '';
+    const resultSection = document.getElementById('result-section');
+    if (resultSection) {
+      resultSection.style.display = 'none';
+    }
+  }
+</script>
+{% endblock %}

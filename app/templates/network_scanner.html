@@ -1,38 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Coming Soon - CyberSentinel</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <style>
-      .coming-soon-container {
-        text-align: center;
-        padding: 80px 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      }
-      .coming-soon-container h1 {
-        font-size: 3rem;
-        color: #b78ca7;
-      }
-      .coming-soon-container p {
-        font-size: 1.25rem;
-        color: #555;
-      }
-      a {
-        color: #7c7aad;
-        text-decoration: none;
-        font-weight: 600;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-    </style>
-</head>
-<body>
-    <div class="coming-soon-container">
-        <h1>🚧 Coming Soon!</h1>
-        <p>This feature is under development. Stay tuned.</p>
-        <p><a href="{{ url_for('main.index') }}">← Back to Home</a></p>
+{% extends "base.html" %}
+
+{% block title %}Network Scanner - CyberSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Network Vulnerability Scanner</h1>
+
+  <form method="POST" id="scan-form">
+    <input type="text" name="target" placeholder="Enter domain or IP address" required />
+    <button type="submit">Scan</button>
+    <button type="button" onclick="clearResults()">Clear</button>
+  </form>
+
+  <div id="loading-spinner" class="spinner" style="display: none;">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+  </div>
+
+  {% if target %}
+    <div class="results">
+      <h2>Results for: {{ target }}</h2>
+      {% if scan_results %}
+        <ul id="result-list">
+          {% for result in scan_results %}
+            <li>{{ result }}</li>
+          {% endfor %}
+        </ul>
+
+        <form action="{{ url_for('main.download_scan') }}" method="POST">
+          <input type="hidden" name="target" value="{{ target }}">
+          {% for result in scan_results %}
+            <input type="hidden" name="scan_results" value="{{ result }}">
+          {% endfor %}
+          <button type="submit">Download Results</button>
+        </form>
+      {% else %}
+        <p>No open ports found.</p>
+      {% endif %}
     </div>
-</body>
-</html>
+  {% endif %}
+</div>
+
+<style>
+  .spinner {
+    margin: 25px auto;
+    width: 70px;
+    text-align: center;
+  }
+
+  .spinner > div {
+    width: 18px;
+    height: 18px;
+    background-color: #7c7aad;
+    border-radius: 100%;
+    display: inline-block;
+    animation: bouncedelay 1.4s infinite ease-in-out both;
+  }
+
+  .spinner .bounce1 { animation-delay: -0.32s; }
+  .spinner .bounce2 { animation-delay: -0.16s; }
+  .spinner .bounce3 { animation-delay: 0s; }
+
+  @keyframes bouncedelay {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('scan-form');
+  const spinner = document.getElementById('loading-spinner');
+
+  form.addEventListener('submit', () => {
+    spinner.style.display = 'block';
+  });
+
+  function clearResults() {
+    document.querySelector('input[name="target"]').value = "";
+    const resultSection = document.querySelector('.results');
+    if (resultSection) resultSection.remove();
+  }
+</script>
+{% endblock %}

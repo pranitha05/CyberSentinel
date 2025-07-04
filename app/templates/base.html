@@ -6,50 +6,314 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 </head>
-<body>
+<body class="light">
   <div id="particles-js"></div>
 
-  <a href="{{ url_for('main.index') }}" class="brand">CyberSentinel</a>
+  <header class="site-header">
+    <a href="{{ url_for('main.index') }}" class="brand">
+      <img src="{{ url_for('static', filename='cyberlogo.png') }}" alt="CyberSentinel Logo">
+    </a>
+      <button id="theme-toggle" title="Toggle Theme">🌙</button>
+  </header>
 
   <main>
     {% block content %}{% endblock %}
   </main>
 
+  <div id="chat-icon" onclick="toggleChat()">💬</div>
+
+  <div id="chat-window">
+    <div id="chat-header">
+      🤖 CyberSentinel Chatbot
+      <span onclick="toggleChat()">✖️</span>
+    </div>
+    <div id="chat-body"></div>
+    <div id="chat-input">
+      <input type="text" id="user-message" placeholder="Ask me anything..." />
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
   <script>
-    particlesJS('particles-js', {
-      particles: {
-        number: { value: 60, density: { enable: true, value_area: 800 } },
-        color: { value: "#a3bffa" },
-        shape: { type: "circle" },
-        opacity: { value: 0.5 },
-        size: { value: 5, random: true },
-        line_linked: {
-          enable: true,
-          distance: 120,
-          color: "#cbd5e1",
-          opacity: 0.4,
-          width: 1
+    function loadParticlesForTheme(theme) {
+      const particleColor = theme === "dark" ? "#a3bffa" : "#4b4b4b";
+      const lineColor = theme === "dark" ? "#cbd5e1" : "#999999";
+      const backgroundColor = theme === "dark" ? "#0e0e1a" : "#fdf6f0";
+      document.getElementById("particles-js").style.backgroundColor = backgroundColor;
+
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 60, density: { enable: true, value_area: 800 } },
+          color: { value: particleColor },
+          shape: { type: "circle" },
+          opacity: { value: 0.5 },
+          size: { value: 5, random: true },
+          line_linked: {
+            enable: true,
+            distance: 120,
+            color: lineColor,
+            opacity: 0.4,
+            width: 1
+          },
+          move: { enable: true, speed: 2, direction: "none", out_mode: "out" }
         },
-        move: {
-          enable: true,
-          speed: 2,
-          direction: "none",
-          out_mode: "out"
-        }
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: true, mode: "repulse" },
-          onclick: { enable: true, mode: "push" }
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "repulse" },
+            onclick: { enable: true, mode: "push" }
+          },
+          modes: {
+            repulse: { distance: 100 },
+            push: { particles_nb: 4 }
+          }
         },
-        modes: {
-          repulse: { distance: 100 },
-          push: { particles_nb: 4 }
-        }
-      },
-      retina_detect: true
+        retina_detect: true
+      });
+    }
+
+    const toggleBtn = document.getElementById("theme-toggle");
+    const body = document.body;
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme === "dark") {
+      body.classList.replace("light", "dark");
+      loadParticlesForTheme("dark");
+    } else {
+      loadParticlesForTheme("light");
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      const isLight = body.classList.contains("light");
+      const newTheme = isLight ? "dark" : "light";
+      body.classList.toggle("light", !isLight);
+      body.classList.toggle("dark", isLight);
+      localStorage.setItem("theme", newTheme);
+      document.getElementById("particles-js").innerHTML = "";
+      loadParticlesForTheme(newTheme);
     });
   </script>
+
+  <style>
+    #chat-icon {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4b4b8a;
+      color: white;
+      font-size: 24px;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    #chat-window {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 320px;
+      height: 500px;
+      background: white;
+      color: black;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    #chat-header {
+      background: #4b4b8a;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    #chat-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      font-size: 14px;
+      color: black;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #chat-body div {
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      max-width: 90%;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+
+    .user-message {
+      background-color: #d1e7dd;
+      align-self: flex-end;
+      text-align: right;
+    }
+
+    .bot-message {
+      background-color: #f0f0f0;
+      align-self: flex-start;
+      text-align: left;
+    }
+
+    #chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    #chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+
+    #chat-input button {
+      background: #4b4b8a;
+      color: white;
+      border: none;
+      padding: 0 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    function toggleChat() {
+      const chatWindow = document.getElementById("chat-window");
+      const isOpen = chatWindow.style.display === "flex";
+      if (!isOpen) {
+        chatWindow.style.display = "flex";
+        chatWindow.style.minHeight = "500px";
+        showWelcomeMessage();
+      } else {
+        chatWindow.style.display = "none";
+      }
+    }
+
+    function showWelcomeMessage() {
+      const chatBody = document.getElementById("chat-body");
+      chatBody.innerHTML = "";
+      const botBubble = document.createElement("div");
+      botBubble.className = "bot-message";
+      botBubble.innerHTML = `<strong>Bot:</strong> 👋 Hi! I'm <b>CyberSentinel Bot</b>. Ask me about cybersecurity, scanning, encryption, or anything you're curious about! 🔐`;
+      chatBody.appendChild(botBubble);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("user-message");
+      const chatBody = document.getElementById("chat-body");
+      const message = input.value.trim();
+      if (!message) return;
+
+      const userBubble = document.createElement("div");
+      userBubble.className = "user-message";
+      userBubble.innerHTML = `<strong>You:</strong> ${message}`;
+      chatBody.appendChild(userBubble);
+
+      input.value = "";
+
+      const botBubble = document.createElement("div");
+      botBubble.className = "bot-message";
+      botBubble.innerHTML = `<strong>Bot:</strong> ⏳ Typing...`;
+      chatBody.appendChild(botBubble);
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      try {
+        const res = await fetch("/chatbot", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+        const data = await res.json();
+        botBubble.innerHTML = `<strong>Bot:</strong> ${formatBotResponse(data.response)}`;
+      } catch (e) {
+        botBubble.innerHTML = `<strong>Bot:</strong> ❌ Failed to respond.`;
+      }
+
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    document.getElementById("user-message").addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function formatBotResponse(response) {
+      return response
+        .replace(/\n{2,}/g, '<br><br>')
+        .replace(/\n/g, '<br>')
+        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+        .replace(/`(.*?)`/g, '<code>$1</code>');
+    }
+  </script>
+
+<div id="auth-modal" class="modal">
+  <div class="modal-content" id="auth-modal-content">
+    <span class="modal-close" onclick="closeAuthModal()">&times;</span>
+
+    <h2 style="margin-bottom: 20px;">Login to CyberSentinel</h2>
+
+    <input type="email" id="login-email" placeholder="Email" required />
+    <input type="password" id="login-password" placeholder="Password" required />
+
+    <button onclick="loginUser()">Login</button>
+
+    <p style="margin-top: 15px;">
+      Don’t have an account?
+      <a href="#" onclick="registerUser()">Register</a>
+    </p>
+
+    <button onclick="googleLogin()" style="margin-top: 10px;">Login with Google</button>
+
+    <div id="auth-error" style="color: red; margin-top: 15px;"></div>
+
+    <input type="hidden" id="register-email" />
+    <input type="hidden" id="register-password" />
+  </div>
+</div>
+<script type="module" src="{{ url_for('static', filename='firebase-auth.js') }}"></script>
+
+
+<script>
+  function closeAuthModal() {
+    document.getElementById("auth-modal").style.display = "none";
+  }
+
+  window.onclick = function (e) {
+    const modal = document.getElementById("auth-modal");
+    if (e.target === modal) {
+      closeAuthModal();
+    }
+  };
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      const modal = document.getElementById("auth-modal");
+      if (modal.style.display === "block") {
+        closeAuthModal();
+      }
+    }
+  });
+</script>
+
 </body>
 </html>

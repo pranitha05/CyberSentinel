@@ -1,30 +1,133 @@
 {% extends "base.html" %}
-
-{% block title %}Home - CyberSentinel{% endblock %}
+{% block title %}CyberSentinel - Your Security Companion{% endblock %}
 
 {% block content %}
-  <div class="dashboard">
-    <h1>🔐 Your Personal Digital Security Dashboard</h1>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.0">
+</head>
 
-    <div class="feature-grid">
-      <a href="{{ url_for('main.password_checker') }}" class="feature-box">
+<div class="auth-header">
+  {% if not session.get('user_logged_in') %}
+    <button class="auth-button" onclick="document.getElementById('auth-modal').style.display='block'">Login / Register</button>
+  {% else %}
+    <form action="{{ url_for('main.logout') }}" method="post" style="display:inline;">
+      <button class="auth-button">Logout</button>
+    </form>
+  {% endif %}
+</div>
+
+<div class="tagline-section">
+  <h1>CyberSentinel</h1>
+  <p class="tagline">Your Trusted Companion for Digital Security and Privacy</p>
+</div>
+
+<section class="about-section">
+  <h2>About CyberSentinel</h2>
+  <p>
+    CyberSentinel is an all-in-one digital security dashboard aimed at empowering users to take control of their online safety.
+    With no sign-ups or logins required, your data stays private and secure. Whether you're checking password strength, scanning networks,
+    or analyzing privacy risks, CyberSentinel gives you the tools you need — with zero hassle.
+  </p>
+</section>
+
+<section class="motivation-section">
+  <h2>Our Motivation</h2>
+  <p>
+    In a digital age where cyber threats are ever-growing, users deserve tools that are powerful yet private.
+    Most security platforms require data exchange, but we believe in zero-trust principles — store nothing, protect everything.
+    Our mission is to simplify cybersecurity and privacy for everyone, without compromising usability.
+    CyberSentinel was built to address this gap: user-first, privacy-forward tools accessible to all.
+    From password checks to network scans, our goal is to make security second nature.
+  </p>
+</section>
+
+<div class="features-vertical-layout">
+
+  <div class="feature-item">
+    <div class="feature-number">1</div>
+    <div class="feature-box">
+      <a href="{{ url_for('main.password_checker') }}">
         <h3>Password Strength Checker</h3>
-      </a>
-      <a href="{{ url_for('main.breach_checker') }}" class="feature-box">
-        <h3>Breach Detection</h3>
-      </a>
-      <a href="{{ url_for('main.network_scanner') }}" class="feature-box">
-        <h3>Network Scanner</h3>
-        <span class="status coming-soon">Coming Soon</span>
-      </a>
-      <a href="{{ url_for('main.encryption_tools') }}" class="feature-box">
-        <h3>Encryption Tools</h3>
-        <span class="status coming-soon">Coming Soon</span>
-      </a>
-      <a href="{{ url_for('main.privacy_analyzer') }}" class="feature-box">
-        <h3>Privacy Risk Analyzer</h3>
-        <span class="status coming-soon">Coming Soon</span>
+        <p>Evaluate your password strength and receive detailed feedback and score to improve it.</p>
       </a>
     </div>
   </div>
+
+  <div class="feature-item right">
+    <div class="feature-number">2</div>
+    <div class="feature-box">
+      <a href="{{ url_for('main.url_checker') }}">
+        <h3>URL Safety Checker</h3>
+        <p>Scan any link to detect known phishing, scam, or unsafe websites before clicking.</p>
+      </a>
+    </div>
+  </div>
+
+  {% if session.get('user_logged_in') %}
+
+  <div class="feature-item">
+    <div class="feature-number">3</div>
+    <div class="feature-box">
+      <a href="{{ url_for('main.network_scanner') }}">
+        <h3>Network Vulnerability Scanner</h3>
+        <p>Perform basic scans on your local network to identify potential security weaknesses.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="feature-item right">
+    <div class="feature-number">4</div>
+    <div class="feature-box">
+      <a href="{{ url_for('encryption.encryption_tools') }}">
+        <h3>Encryption Tools</h3>
+        <p>Encrypt or decrypt texts using strong AES and hashing methods.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-number">5</div>
+    <div class="feature-box">
+      <a href="{{ url_for('main.privacy_analyzer') }}">
+        <h3>Privacy Risk Analyzer</h3>
+        <p>Analyze content for sensitive data and get privacy recommendations instantly.</p>
+      </a>
+    </div>
+  </div>
+
+  {% else %}
+
+  <div class="feature-item">
+    <div class="feature-number">3</div>
+    <div class="feature-box">
+      <a href="#" onclick="document.getElementById('auth-modal').style.display='block'">
+        <h3>Network Vulnerability Scanner 🔒</h3>
+        <p>Login required to scan your network and detect open ports or unsafe services.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="feature-item right">
+    <div class="feature-number">4</div>
+    <div class="feature-box">
+      <a href="#" onclick="document.getElementById('auth-modal').style.display='block'">
+        <h3>Encryption Tools 🔒</h3>
+        <p>Login required to encrypt/decrypt using AES, Base64, or Caesar Cipher securely.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="feature-item">
+    <div class="feature-number">5</div>
+    <div class="feature-box">
+      <a href="#" onclick="document.getElementById('auth-modal').style.display='block'">
+        <h3>Privacy Risk Analyzer 🔒</h3>
+        <p>Login required to detect email IDs, phone numbers, credit card info and more.</p>
+      </a>
+    </div>
+  </div>
+
+  {% endif %}
+</div>
+
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}URL Safety Checker - CyberSentinel{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1>URL Safety Checker</h1>
+    <form method="POST" id="url-form">
+      <input type="text" name="url" id="url-input" placeholder="Enter a URL to check" required />
+      <button type="submit">Check URL</button>
+      <button type="button" onclick="clearURL()">Clear</button>
+    </form>
+
+    {% if url %}
+      <div class="results" id="result-section">
+        <h2>Result</h2>
+        <p><strong>URL:</strong> {{ url }}</p>
+        <p><strong>Status:</strong> {{ result }}</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function clearURL() {
+      document.getElementById('url-input').value = "";
+      const result = document.getElementById('result-section');
+      if (result) result.remove();
+    }
+  </script>
+{% endblock %}
