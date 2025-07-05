@@ -17,7 +17,7 @@ import socket, hashlib, re
 import firebase_admin
 from firebase_admin import credentials, auth as firebase_auth
 
-cred = credentials.Certificate("firebase-admin-sdk.json")
+cred = credentials.Certificate("/etc/secrets/firebase-admin-sdk.json")
 firebase_admin.initialize_app(cred)
 
 main = Blueprint('main', __name__)
