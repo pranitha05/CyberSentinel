@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.env
+.env
+env/
+venv/
+instance/
+.git
+.gitignore
+node_modules
+*.log
+*.DS_Store
+firebase-debug.log

@@ -1,0 +1,7 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/cybersentinel', '.' ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'gcr.io/$PROJECT_ID/cybersentinel' ]
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: [ 'gcloud', 'run', 'deploy', 'cybersentinel', '--image', 'gcr.io/$PROJECT_ID/cybersentinel', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated' ]
