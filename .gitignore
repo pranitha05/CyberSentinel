@@ -1,7 +1,7 @@
 # 🔒 Ignore API keys and secrets
 .env
 firebase-admin-sdk.json
-static/firebase-auth.js
+
 
 # 🐍 Python/Flask-specific ignores
 __pycache__/
