@@ -10,6 +10,7 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
+
 let auth, provider;
 async function sendIdTokenToBackend(user) {
   try {
@@ -108,10 +109,16 @@ function setupAuthHandlers() {
   });
 }
 
-// 🔃 Load Firebase config and init app
 async function loadFirebaseConfigAndInit() {
-  const res = await fetch("https://cybersentinel-g24u.onrender.com/firebase-config");
-  const firebaseConfig = await res.json();
+  const firebaseConfig = {
+    "apiKey": os.getenv("FIREBASE_API_KEY"),
+    "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
+    "projectId": os.getenv("FIREBASE_PROJECT_ID"),
+    "storageBucket": os.getenv("FIREBASE_STORAGE_BUCKET"),
+    "messagingSenderId": os.getenv("FIREBASE_MSG_SENDER_ID"),
+    "appId": os.getenv("FIREBASE_APP_ID"),
+    "measurementId": os.getenv("FIREBASE_MEASUREMENT_ID")
+  };
 
   const app = initializeApp(firebaseConfig);
   auth = getAuth(app);
