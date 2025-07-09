@@ -9,7 +9,7 @@ import {
   GoogleAuthProvider,
   signOut
 } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-
+import os;
 
 let auth, provider;
 async function sendIdTokenToBackend(user) {
