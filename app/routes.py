@@ -23,11 +23,15 @@ firebase_admin.initialize_app(cred)
 main = Blueprint('main', __name__)
 encryption_bp = Blueprint('encryption', __name__)
 chatbot_bp = Blueprint('chatbot', __name__)
-gemini_model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    system_instruction="You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
-                       "If someone asks about other topics, politely respond: 'I'm only trained to answer cybersecurity and ethical hacking questions.'"
+gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+response = gemini_model.generate_content(
+    [
+        {"role": "system", "parts": ["You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
+                                     "If someone asks about other topics, politely respond: 'I'm only trained to answer cybersecurity and ethical hacking questions.'"]},
+        {"role": "user", "parts": [msg]}
+    ]
 )
+
 
 
 
