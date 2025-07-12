@@ -231,13 +231,11 @@ def chatbot():
         return jsonify({"response": "Sorry, I can only help with cybersecurity and ethical hacking topics."})
 
     try:
-        response = gemini_model.generate_content([
-            {"role": "system", "parts": [
-                "You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
-                "If someone asks about other topics, politely respond: 'I'm only trained to answer cybersecurity and ethical hacking questions.'"
-            ]},
-            {"role": "user", "parts": [msg]}
-        ])
+        system_instruction = (
+            "You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
+            "If someone asks about other topics, politely respond: 'I'm only trained to answer cybersecurity and ethical hacking questions.'\n\n"
+        )
+        response = gemini_model.generate_content(system_instruction + msg)
         return jsonify({"response": response.text})
     except Exception as e:
         return jsonify({"response": f"❌ {str(e)}"})
