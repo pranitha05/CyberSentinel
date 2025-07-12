@@ -24,16 +24,6 @@ main = Blueprint('main', __name__)
 encryption_bp = Blueprint('encryption', __name__)
 chatbot_bp = Blueprint('chatbot', __name__)
 gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-response = gemini_model.generate_content(
-    [
-        {"role": "system", "parts": ["You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
-                                     "If someone asks about other topics, politely respond: 'I'm only trained to answer cybersecurity and ethical hacking questions.'"]},
-        {"role": "user", "parts": [msg]}
-    ]
-)
-
-
-
 
 @main.route('/')
 def index():
@@ -240,8 +230,14 @@ def chatbot():
     if not any(word in msg.lower() for word in cyber_keywords):
         return jsonify({"response": "Sorry, I can only help with cybersecurity and ethical hacking topics."})
 
-    try:
-        res = gemini_model.generate_content(msg).text
-        return jsonify({"response": res})
+     try:
+        response = gemini_model.generate_content([
+            {"role": "system", "parts": [
+                "You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
+                "If someone asks about other topics, politely respond: 'I'm only trained to answer cybersecurity and ethical hacking questions.'"
+            ]},
+            {"role": "user", "parts": [msg]}
+        ])
+        return jsonify({"response": response.text})
     except Exception as e:
         return jsonify({"response": f"❌ {str(e)}"})
