@@ -230,7 +230,7 @@ def chatbot():
     if not any(word in msg.lower() for word in cyber_keywords):
         return jsonify({"response": "Sorry, I can only help with cybersecurity and ethical hacking topics."})
 
-     try:
+    try:
         response = gemini_model.generate_content([
             {"role": "system", "parts": [
                 "You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
