@@ -23,7 +23,13 @@ firebase_admin.initialize_app(cred)
 main = Blueprint('main', __name__)
 encryption_bp = Blueprint('encryption', __name__)
 chatbot_bp = Blueprint('chatbot', __name__)
-gemini_model = genai.GenerativeModel("gemini-1.5-flash")
+gemini_model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    system_instruction="You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
+                       "If someone asks about other topics, politely respond: 'I'm only trained to answer cybersecurity and ethical hacking questions.'"
+)
+
+
 
 @main.route('/')
 def index():
@@ -221,6 +227,11 @@ def privacy_analyzer():
 @chatbot_bp.route('/chatbot', methods=['POST'])
 def chatbot():
     msg = request.json.get('message', "")
+    cyber_keywords = ['cybersecurity', 'hacking', 'phishing', 'encryption', 'firewall', 'vulnerability', 'threat', 'attack', 'malware', 'penetration', 'network', 'scanner']
+
+if not any(word in msg.lower() for word in cyber_keywords):
+    return jsonify({"response": "Sorry, I can only help with cybersecurity and ethical hacking topics."})
+
     if not msg:
         return jsonify({"response": "Please enter a message."})
     try:
