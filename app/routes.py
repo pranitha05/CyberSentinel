@@ -227,13 +227,15 @@ def privacy_analyzer():
 @chatbot_bp.route('/chatbot', methods=['POST'])
 def chatbot():
     msg = request.json.get('message', "")
-    cyber_keywords = ['cybersecurity', 'hacking', 'phishing', 'encryption', 'firewall', 'vulnerability', 'threat', 'attack', 'malware', 'penetration', 'network', 'scanner']
-
-if not any(word in msg.lower() for word in cyber_keywords):
-    return jsonify({"response": "Sorry, I can only help with cybersecurity and ethical hacking topics."})
-
+    cyber_keywords = ['cybersecurity', 'hacking', 'phishing', 'encryption', 'firewall',
+                      'vulnerability', 'threat', 'attack', 'malware', 'penetration', 'network', 'scanner']
+    
     if not msg:
         return jsonify({"response": "Please enter a message."})
+
+    if not any(word in msg.lower() for word in cyber_keywords):
+        return jsonify({"response": "Sorry, I can only help with cybersecurity and ethical hacking topics."})
+
     try:
         res = gemini_model.generate_content(msg).text
         return jsonify({"response": res})
