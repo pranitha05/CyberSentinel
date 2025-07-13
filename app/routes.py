@@ -220,22 +220,26 @@ def privacy_analyzer():
 
 @chatbot_bp.route('/chatbot', methods=['POST'])
 def chatbot():
-    msg = request.json.get('message', "")
-    cyber_keywords = ['cybersecurity', 'hacking', 'phishing', 'encryption', 'firewall',
-                      'vulnerability', 'threat', 'attack', 'malware', 'penetration', 'network', 'scanner']
-    
+    msg = request.json.get('message', "").strip()
+
     if not msg:
         return jsonify({"response": "Please enter a message."})
 
-    if not any(word in msg.lower() for word in cyber_keywords):
-        return jsonify({"response": "Sorry, I can only help with cybersecurity and ethical hacking topics."})
+    # Basic greetings detection
+    greetings = ['hi', 'hello', 'hey', 'greetings']
+    if msg.lower() in greetings:
+        return jsonify({"response": "👋 Hello! I'm CyberSentinel. How can I assist you with cybersecurity today?"})
 
     try:
         system_instruction = (
-            "You are CyberSentinel, a helpful assistant that only answers questions related to cybersecurity and ethical hacking. "
-            "If someone asks about other topics, politely respond: 'I'm only trained to answer cybersecurity and ethical hacking questions.'\n\n"
+            "You are CyberSentinel, an expert assistant who ONLY answers questions related to cybersecurity, ethical hacking, "
+            "security tools, recent cyber threats, best practices, and cybersecurity news. "
+            "You do NOT answer unrelated questions — instead, you politely say: "
+            "'I'm only trained to assist with cybersecurity topics. Please ask me something related to that.'\n\n"
+            "Be clear, concise, and helpful in your responses."
         )
-        response = gemini_model.generate_content(system_instruction + msg)
+
+        response = gemini_model.generate_content(system_instruction + "\nUser: " + msg)
         return jsonify({"response": response.text})
     except Exception as e:
         return jsonify({"response": f"❌ {str(e)}"})
