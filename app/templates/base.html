@@ -335,8 +335,15 @@ body.dark #chat-input button {
 
     <h2 style="margin-bottom: 20px;">Login to CyberSentinel</h2>
 
-    <input type="email" id="login-email" placeholder="Email" required />
-    <input type="password" id="login-password" placeholder="Password" required />
+    <label style="display: block; margin: 10px auto; width: 80%;">
+      <input type="email" id="login-email" placeholder="Email" required
+        style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #7c7aad;" />
+    </label>
+
+    <label style="display: block; margin: 10px auto; width: 80%;">
+      <input type="password" id="login-password" placeholder="Password" required
+        style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #7c7aad;" />
+    </label>
 
     <button onclick="loginUser()">Login</button>
 
