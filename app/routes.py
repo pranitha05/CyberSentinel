@@ -220,15 +220,25 @@ def privacy_analyzer():
 
 @chatbot_bp.route('/chatbot', methods=['POST'])
 def chatbot():
-    msg = request.json.get('message', "").strip()
+    msg = request.json.get('message', "").strip().lower()
 
     if not msg:
         return jsonify({"response": "Please enter a message."})
 
-    # Basic greetings detection
+    # Greeting check
     greetings = ['hi', 'hello', 'hey', 'greetings']
-    if msg.lower() in greetings:
+    if msg in greetings:
+        session['last_bot_prompt'] = 'greeting'
         return jsonify({"response": "👋 Hello! I'm CyberSentinel. How can I assist you with cybersecurity today?"})
+
+    # User says "no" — handle only if it's a polite exit
+    no_variants = ['no', 'nah', 'nope', 'not really']
+    if msg in no_variants:
+        if session.get('last_bot_prompt') == 'followup':
+            session['last_bot_prompt'] = None
+            return jsonify({"response": "Alright! Feel free to come back if you need help with anything cybersecurity-related. Stay safe out there! 🔐"})
+        else:
+            return jsonify({"response": "Got it. If my response wasn’t helpful, feel free to ask your question differently — I’m here to help with anything related to cybersecurity!"})
 
     try:
         system_instruction = (
@@ -239,7 +249,16 @@ def chatbot():
             "Be clear, concise, and helpful in your responses."
         )
 
+        # Ask Gemini to respond
         response = gemini_model.generate_content(system_instruction + "\nUser: " + msg)
-        return jsonify({"response": response.text})
+        bot_reply = response.text.strip()
+
+        # Detect if bot ended with a helpful offer to continue (sets context for "no")
+        if any(phrase in bot_reply.lower() for phrase in ["anything else", "can i help", "need more help", "what else"]):
+            session['last_bot_prompt'] = 'followup'
+        else:
+            session['last_bot_prompt'] = None
+
+        return jsonify({"response": bot_reply})
     except Exception as e:
         return jsonify({"response": f"❌ {str(e)}"})
