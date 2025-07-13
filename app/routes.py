@@ -231,14 +231,18 @@ def chatbot():
         session['last_bot_prompt'] = 'greeting'
         return jsonify({"response": "👋 Hello! I'm CyberSentinel. How can I assist you with cybersecurity today?"})
 
-    # User says "no" — handle only if it's a polite exit
-    no_variants = ['no', 'nah', 'nope', 'not really']
-    if msg in no_variants:
+    # Handle polite one-word replies (potential conversation enders)
+    polite_closers = ['no', 'nah', 'nope', 'not really', 'ok', 'okay', 'alright']
+    if msg in polite_closers:
         if session.get('last_bot_prompt') == 'followup':
             session['last_bot_prompt'] = None
-            return jsonify({"response": "Alright! Feel free to come back if you need help with anything cybersecurity-related. Stay safe out there! 🔐"})
+            return jsonify({
+                "response": "Alright! Feel free to come back if you need help with anything cybersecurity-related. Stay safe out there! 🔐"
+            })
         else:
-            return jsonify({"response": "Got it. If my response wasn’t helpful, feel free to ask your question differently — I’m here to help with anything related to cybersecurity!"})
+            return jsonify({
+                "response": "Understood! If there's anything specific you'd like to know about cybersecurity, feel free to ask. 😊"
+            })
 
     try:
         system_instruction = (
@@ -253,12 +257,16 @@ def chatbot():
         response = gemini_model.generate_content(system_instruction + "\nUser: " + msg)
         bot_reply = response.text.strip()
 
-        # Detect if bot ended with a helpful offer to continue (sets context for "no")
-        if any(phrase in bot_reply.lower() for phrase in ["anything else", "can i help", "need more help", "what else"]):
+        # Detect if bot ended with a follow-up invitation
+        if any(phrase in bot_reply.lower() for phrase in [
+            "anything else", "can i help", "need more help", "what else", "any other question"
+        ]):
             session['last_bot_prompt'] = 'followup'
         else:
             session['last_bot_prompt'] = None
 
         return jsonify({"response": bot_reply})
+
     except Exception as e:
         return jsonify({"response": f"❌ {str(e)}"})
+
